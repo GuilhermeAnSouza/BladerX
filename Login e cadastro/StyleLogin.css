@@ -5,7 +5,7 @@ box-sizing: border-box;
 }
 
 body {
-background-image: url('shufundo.png');
+background-image: url('imagens/shufundo.png');
 background-size: cover; 
 height: 100vh;
 
@@ -24,22 +24,22 @@ height: 100vh;
 }
 
 .background .beys {
-  height: 200px;
-  width: 200px;
+  height: 180px;
+  width: 180px;
   position: absolute;
   background-size: cover;
   transition:10s ease-in-out;
 }
 
 .beys:first-child {
-  background-image: url('bey1.png');
-  left: -80px;
-  top: -100px;
+  background-image: url('imagens/bey1.png');
+  left: -70px;
+  top: -90px;
 }
 .beys:last-child {
-  background-image: url('bey2.png');
-  right: -80px;
-  bottom: -90px;
+  background-image: url('imagens/bey2.png');
+  right: -70px;
+  bottom: -85px;
 }
 
 .beys:hover {
@@ -74,19 +74,21 @@ form h3 {
   font-family: 'Paladins', sans-serif;
 }
 
-form h6 {
-    display: block;
-    margin-top: 10px;
-    font-size: 20px;
-    font-family: 'SF Theramin Gothic', sans-serif;
-    cursor: pointer;
-    transition-duration: 0.3s;
-  transition-timing-function: ease-in-out;
+form h6 a {
+  display: block;
+  margin-top: 10px;
+  font-size: 21px;
+  font-family: 'SF Theramin Gothic', sans-serif;
+  cursor: pointer;
+  text-decoration: none;
+  transition-duration: 0.3s;
+transition-timing-function: ease-in-out;
 }
 
-form h6:hover {
-    color: #000000;
-    }
+
+form h6 a:hover {
+  color: #000000;
+  }
 
 label {
   display: block;
