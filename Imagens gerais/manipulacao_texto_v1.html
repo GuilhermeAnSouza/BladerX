@@ -1,0 +1,68 @@
+<!-- 
+    Frase: "BOM DIA!" 
+    Tamanho da frase: 8
+    Possui vogal: "Sim"
+
+    Vertical: 
+ 
+    B   - 0
+    O   - 1
+    M   - 2
+        - 3
+    D
+    I
+    A
+    !
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    Frase: <input type="text" id="input_frase" />
+    <button onclick="verticalizar()">Verticalizar</button>
+    <div id="div_mensagem"></div>
+  </body>
+</html>
+
+<script>
+  function verticalizar() {
+    var mensagem = "";
+    var frase_original = input_frase.value;
+
+    var frase_minuscula = frase_original.toLowerCase(); // converte a frase para caracteres minúsculos
+    var tamanho_frase = frase_original.length; // obtém a quantidade de caracteres da frase
+
+    var possui_vogal = "não"; // verificador se possui vogal (sim/ não)
+
+    // valida se existe alguma vogal dentro da frase convertida em caracteres minúsculos
+    if (
+      frase_minuscula.includes("a") ||
+      frase_minuscula.includes("e") ||
+      frase_minuscula.includes("i") ||
+      frase_minuscula.includes("o") ||
+      frase_minuscula.includes("u")
+    ) {
+      possui_vogal = "sim"; // como o valor se inicia em "não", só precisamos do IF, sem ELSE
+    }
+
+    // percorre todo o vetor, contando de 0 até chegar no tamanho da frase (quando chegar no tamanho da frase, para)
+    for (var index = 0; index < tamanho_frase; index++) {
+      var letra_atual = frase_original[index]; // a cada repetição, acessa a frase no índice equivalente ao contador atual, obtendo o valor do caractere naquele índice
+
+      mensagem += `${index + 1}ª letra: ${letra_atual} <br>`; // exibe qual é o índice e o caractere atual, com base no índice acessado na frase
+    }
+
+    div_mensagem.innerHTML = `
+      <b>Frase:</b> ${frase_original} <br>
+      <b>Tamanho da frase:</b> ${tamanho_frase} <br>
+      <b>Possui vogal:</b> ${possui_vogal} <br><br>
+
+      <b>Frase Vertical:</b> <br> ${mensagem}
+    `;
+  }
+</script>
