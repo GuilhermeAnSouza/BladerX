@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página de Perfil</title>
+  <link rel="stylesheet" href="stylePerfil.css">
+  <link href="https://fonts.cdnfonts.com/css/sf-theramin-gothic" rel="stylesheet">
+</head>
+
+<body>
+
+  <nav class="sidebar">
+    <img src="imagens/perfil.png" alt="Perfil" class="icon">
+    <img src="imagens/battleEscuro.png" alt="Battle" class="icon">
+    <img src="imagens/construir.png" alt="Construir" class="icon">
+    <img src="imagens/torneio.png" alt="Torneio" class="icon">
+  </nav>
+
+  <div class="perfilConteudo">
+    <div class="logoContainer">
+      <img src="imagens/bladerX.png" alt="BladerX Logo" class="logo">
+    </div>
+
+    <div class="cima">
+      <img src="imagens/fotoPerfil.png" alt="Foto de Perfil" class="fotoPerfil">
+    </div>
+
+    <div class="baixo" id="baixo">
+      <div class="iconContainer">
+        <img src="imagens/colecao.png" alt="Coleção" class="iconPerfil" onclick="colecao()">
+        <p class="iconLegenda">Coleção</p>
+      </div>
+
+      <div class="iconContainer">
+        <img src="imagens/adicionar.png" alt="Adicionar" class="iconPerfil" onclick="adicionar()">
+        <p class="iconLegenda">Adicionar</p>
+      </div>
+
+      <div class="iconContainer">
+        <img src="imagens/historico.png" alt="Histórico" class="iconPerfil" onclick="historico()">
+        <p class="iconLegenda">Histórico</p>
+      </div>
+
+    </div>
+
+    <div class="superiorEsquerdo" id="superiorEsquerdo">
+      <div class="iconContainer">
+        <img src="imagens/colecao.png" alt="Coleção" class="iconSuperior" onclick="colecao()">
+        <p class="iconLegenda">Coleção</p>
+      </div>
+
+    <div class="popup" id="popup">
+      <div class="pecasCombo" id="pecasCombo">
+      <span class="combos" onclick="combos()">Combos</span>
+      <span class="pecas" onclick="carregarPecas()">Peças</span>
+    </div>
+      <div class='listaPecas' id="listaPecas"></div>
+    </div>
+    
+      
+      <div class="iconContainer">
+        <img src="imagens/adicionar.png" alt="Adicionar" class="iconSuperior" onclick="adicionar()">
+        <p class="iconLegenda">Adicionar</p>
+      </div>
+
+      <div class="iconContainer">
+        <img src="imagens/historico.png" alt="Histórico" class="iconSuperior" onclick="historico()">
+        <p class="iconLegenda">Histórico</p>
+      </div>
+
+      
+    </div>
+</body>
+
+</html>
+
+<script>
+
+  superiorEsquerdo.style.display = 'none'
+  popup.style.display = 'none'
+
+
+
+  function colecao() {
+    alert('colecao')
+    superiorEsquerdo.style.display = 'flex'
+    popup.style.display = 'block'
+    baixo.style.display = 'none'
+
+  }
+
+    function carregarPecas() {
+      pecasCombo.style.display = 'none'
+      
+    fetch("/pecas/listar")
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            console.error("Erro ao buscar peças!");
+            return [];
+        })
+        .then(function (pecas) {
+            listaPecas.innerHTML = ""; // Limpa a lista
+
+            for (var i = 0; i < pecas.length; i++) {
+                listaPecas.innerHTML += pecas[i].nome + " ";
+            }
+        })
+        .catch(function (erro) {
+            console.error("Erro na requisição:", erro);
+        });
+      }
+
+  function adicionar() {
+    alert('adicionar')
+    superiorEsquerdo.style.display = 'flex'
+    baixo.style.display = 'none'
+    popup.style.display = 'none'
+
+  }
+
+  function historico() {
+    alert('historico')
+    superiorEsquerdo.style.display = 'flex'
+    baixo.style.display = 'none'
+    baixo.style.display = 'none'
+
+  }
+
+
+
+
+</script>
+
+

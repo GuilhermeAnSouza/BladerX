@@ -1,0 +1,157 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo com fundo personalizado */
+body {
+    background-image: url('imagens/fundoPretoBranco.png');
+    background-size: cover;
+    display: flex;
+}
+
+/* Navbar lateral esquerda */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 100vh;
+    background-color: rgba(255, 0, 0, 0.4);
+    padding-top: 20px;
+}
+
+.sidebar .icon {
+    width: 63px;
+    margin: 60px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.sidebar .icon:hover {
+    transform: scale(1.1);
+}
+
+/* Conteúdo principal da página de perfil */
+.perfilConteudo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    padding-top: 50px;
+}
+
+.logoContainer {
+    position: absolute;
+    top: 5px;
+}
+
+.logo {
+    width: 400px;
+    height: auto;
+}
+
+/* Ícone da foto de perfil centralizado */
+.fotoPerfil {
+    position: absolute;
+    top: 100px;
+    left: 48%;
+    width: 150px;
+    height: auto;
+}
+
+/* Ícones na linha de baixo */
+.baixo {
+    display: flex;
+    gap: 30px;
+}
+
+.superiorEsquerdo {
+    display: flex;
+    gap: 80px;
+    position: absolute; /* Para posicionar no topo à esquerda */
+    top: 30px; /* Distância do topo */
+    left: 120px; /* Distância da esquerda */
+}
+
+.iconPerfil {
+    margin-top: 150px;
+    margin-right: 50px;
+    margin-left: 40px;
+    width: 160px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+    filter: drop-shadow(0 0 10px #BD0A0A) 
+
+}
+
+.iconPerfil:hover {
+    transform: scale(1.1);
+}
+
+
+.iconSuperior {
+    top: 20px;
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+    filter: drop-shadow(0 0 10px #BD0A0A);
+}
+
+.iconSuperior:hover {
+    transform: scale(1.1);
+}
+
+.popup {
+    position: fixed;
+    cursor: pointer;
+    color: #ffffff;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    text-align: center;
+    font-family: 'SF Theramin Gothic', sans-serif;
+    font-size: 100px;
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    filter: drop-shadow(0 0 10px #000000);
+}
+
+.popup .combos, .popup .pecas {
+    transition-duration: 0.3s;
+    transition-timing-function: ease-in-out;
+    filter: drop-shadow(0 0 10px #000000);
+}
+
+.popup .combos:hover, .popup .pecas:hover {
+    color: black;
+    filter: drop-shadow(0 0 10px #810101);
+}
+
+.listaPecas{
+    color: #810101;
+    font-size: 30px;
+}
+
+
+.iconContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.iconLegenda {
+    font-size: 25px;
+    color: #ffffff;
+    margin-top: 8px;
+    font-family: 'SF Theramin Gothic', sans-serif;
+}
+
+
