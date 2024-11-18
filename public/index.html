@@ -56,7 +56,22 @@
       <span class="combos" onclick="combos()">Combos</span>
       <span class="pecas" onclick="carregarPecas()">Peças</span>
     </div>
-      <div class='listaPecas' id="listaPecas"></div>
+    <div class='listaPecas' id="listaPecas">
+      <h3>Gatinko</h3>
+      <div id="gatinko"></div>
+    
+      <h3>Layer</h3>
+      <div id="layer"></div>
+    
+      <h3>Layer Weight</h3>
+      <div id="layerWeight"></div>
+    
+      <h3>Disk</h3>
+      <div id="disk"></div>
+    
+      <h3>Driver</h3>
+      <div id="driver"></div>
+    </div>
     </div>
     
       
@@ -80,6 +95,7 @@
 
   superiorEsquerdo.style.display = 'none'
   popup.style.display = 'none'
+  listaPecas.style.display = 'none'
 
   var imagensPecas = { 
   'Achilles': 'Gatinko/GatinkoChipAchilles.webp', // JSON para colocar um link para cada nome de peça
@@ -106,36 +122,66 @@
   }
 
   function carregarPecas() {
-  pecasCombo.style.display = 'none'
+  pecasCombo.style.display = 'none';
+  listaPecas.style.display = 'block';
 
-  fetch("/pecas/listar") // Pegando a função que está no pecas.js
+  fetch("/pecas/listar") // Rota que retorna os dados da tabela 'pecas'
     .then(function (response) {
       if (response.ok) {
-        return response.json()
+        return response.json();
+      } else {
+        console.error("Erro ao buscar peças");
+        return [];
       }
-      console.error("Erro ao buscar peças")
-      return []
     })
     .then(function (pecas) {
-      listaPecas.innerHTML = "" // Limpa a lista
+      listaPecas.innerHTML = ""; // Limpa a lista antes de carregar
 
-      for (var contador = 0; contador < pecas.length; contador++) {
-        var nomePeca = pecas[contador].nome; // procurando o nome da peça dentro do BD que se tornou um JSON
-        
-        // Pegando o caminho da imagem baseado no nome da peça que foi pega pelo for
-        var imagemCaminho = imagensPecas[nomePeca];
+      // Obter tipos únicos de peças
+      var tipos = [];
+      for (var i = 0; i < pecas.length; i++) {
+        if (tipos.indexOf(pecas[i].tipo) == -1) {
+          tipos.push(pecas[i].tipo);
+        }
+      }
 
-        
-        // Criando o HTML da imagem
-        var imgPecas = '<div><img src="beyblades/' + imagemCaminho + '" style="width: 50px;" />' + nomePeca + '</div>'
-        
-        listaPecas.innerHTML += imgPecas
+      // Criar seções para cada tipo
+      for (var i = 0; i < tipos.length; i++) {
+        var tipo = tipos[i];
+        listaPecas.innerHTML +=
+          '<div class="tipoPecas">' +
+          '<h3>' + tipo + '</h3>' +
+          '<div id="tipo-' + tipo + '" class="pecasTipo"></div>' +
+          '</div>';
+      }
+
+      // Preencher cada tipo com as peças correspondentes
+      for (var i = 0; i < pecas.length; i++) {
+        var peca = pecas[i];
+        var nomePeca = peca.nome; // Nome da peça
+        var tipoPeca = peca.tipo; // Tipo da peça
+        var abraviacao = peca.abraviacao; // Abreviação (opcional)
+        var imagemCaminho = imagensPecas[nomePeca]; // Caminho da imagem baseado no nome
+
+        // Criando o HTML da peça
+        var imgPecas =
+          '<div class="imgBey">' +
+          '<img src="beyblades/' + imagemCaminho + '" style="width: 50px;" />' +
+          '<p>' + nomePeca + ' (' + (abraviacao || "N/A") + ')</p>' +
+          '</div>';
+
+        // Adicionando à div correspondente ao tipo
+        var tipoContainer = document.getElementById("tipo-" + tipoPeca);
+        if (tipoContainer) {
+          tipoContainer.innerHTML += imgPecas;
+        }
       }
     })
     .catch(function (erro) {
-      console.error("Erro na requisição:", erro)
-    })
+      console.error("Erro na requisição:", erro);
+    });
 }
+
 
   function adicionar() {
     alert('adicionar')
