@@ -12,10 +12,10 @@
 <body>
 
   <nav class="sidebar">
-    <img src="imagens/perfil.png" alt="Perfil" class="icon">
-    <img src="imagens/battleEscuro.png" alt="Battle" class="icon">
-    <img src="imagens/construir.png" alt="Construir" class="icon">
-    <img src="imagens/torneio.png" alt="Torneio" class="icon">
+    <a href="index.html"> <img src="imagens/perfil.png" alt="Perfil" class="icon"></a>
+    <a href="batalha.html"> <img src="imagens/battleEscuro.png" alt="Battle" class="icon"></a>
+    <a href="criacao.html"> <img src="imagens/construir.png" alt="Construir" class="icon"></a>
+    <a href="campeonato.html"> <img src="imagens/torneio.png" alt="Torneio" class="icon"></a>
   </nav>
 
   <div class="perfilConteudo">
@@ -81,6 +81,20 @@
   superiorEsquerdo.style.display = 'none'
   popup.style.display = 'none'
 
+  var imagensPecas = { 
+  'Achilles': 'Gatinko/GatinkoChipAchilles.webp', // JSON para colocar um link para cada nome de peça
+  'Gou': 'layerWeight/LayerWeightGou.webp',
+  'Ace': 'layer/LayerBaseAce.webp',
+  'Around': 'disk/DiskAround.webp',
+  'Charge': 'driver/DriverCharge.webp',
+  'Ashura': 'gatinko/GatinkoChipAshura.webp',
+  'Metsu': 'layerWeight/LayerWeightRetsu.webp',
+  'Bushin': 'layer/LayerBaseBushin.webp',
+  'Ratchet': 'disk/DiskRatchet.webp',
+  'Keep': 'driver/DriverKeep.webp',
+  'Generate': 'driver/DriverGenerate.webp',
+  'Erase': 'layer/LayerBaseErase.webp'
+}
 
 
   function colecao() {
@@ -91,28 +105,37 @@
 
   }
 
-    function carregarPecas() {
-      pecasCombo.style.display = 'none'
-      
-    fetch("/pecas/listar")
-        .then(function (response) {
-            if (response.ok) {
-                return response.json();
-            }
-            console.error("Erro ao buscar peças!");
-            return [];
-        })
-        .then(function (pecas) {
-            listaPecas.innerHTML = ""; // Limpa a lista
+  function carregarPecas() {
+  pecasCombo.style.display = 'none'
 
-            for (var i = 0; i < pecas.length; i++) {
-                listaPecas.innerHTML += pecas[i].nome + " ";
-            }
-        })
-        .catch(function (erro) {
-            console.error("Erro na requisição:", erro);
-        });
+  fetch("/pecas/listar") // Pegando a função que está no pecas.js
+    .then(function (response) {
+      if (response.ok) {
+        return response.json()
       }
+      console.error("Erro ao buscar peças")
+      return []
+    })
+    .then(function (pecas) {
+      listaPecas.innerHTML = "" // Limpa a lista
+
+      for (var contador = 0; contador < pecas.length; contador++) {
+        var nomePeca = pecas[contador].nome; // procurando o nome da peça dentro do BD que se tornou um JSON
+        
+        // Pegando o caminho da imagem baseado no nome da peça que foi pega pelo for
+        var imagemCaminho = imagensPecas[nomePeca];
+
+        
+        // Criando o HTML da imagem
+        var imgPecas = '<div><img src="beyblades/' + imagemCaminho + '" style="width: 50px;" />' + nomePeca + '</div>'
+        
+        listaPecas.innerHTML += imgPecas
+      }
+    })
+    .catch(function (erro) {
+      console.error("Erro na requisição:", erro)
+    })
+}
 
   function adicionar() {
     alert('adicionar')

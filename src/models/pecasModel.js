@@ -1,4 +1,4 @@
-var database = require("../database/config");; // Importa o arquivo de configuração do banco
+var database = require("../database/config"); // Pega as configurações do banco de dados
 
 function listarPecas() {
     var instrucao = "SELECT * FROM pecas"; // Consulta SQL para listar as peças
@@ -6,5 +6,5 @@ function listarPecas() {
 }
 
 module.exports = {
-    listarPecas // Exporta a função
+    listarPecas // Para outros arquivos poderem usar a função
 };
