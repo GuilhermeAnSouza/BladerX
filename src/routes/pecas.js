@@ -5,4 +5,7 @@ var pecasController = require("../controllers/pecasController");
 // Rota para listar peças
 router.get("/listar", pecasController.listar); // O caminho da função do controller que faz referencia ao model
 
+router.post("/adicionar", function (req, res) {
+    pecasController.adicionar(req, res);
+});
 module.exports = router;

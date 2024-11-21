@@ -204,3 +204,51 @@ body {
     text-transform: uppercase; /* Coloca o texto em maiúsculas */
     font-family: 'SF Theramin Gothic', sans-serif;
 }
+
+.pecasContainer {
+    display: flex;
+    flex-direction: column; /* Alinha as imagens e textos verticalmente */
+    align-items: center; /* Centraliza o conteúdo */
+    margin-bottom: 30px; /* Espaço entre os conjuntos */
+    border: 1px solid rgba(255, 255, 255, 0.2); /* Borda opcional */
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.3); /* Fundo transparente */
+}
+
+.pecasContainer .imgBey {
+    display: flex;
+    flex-direction: column; /* Alinha as imagens e textos verticalmente */
+    align-items: center; /* Centraliza o conteúdo */
+    margin-bottom: 10px; /* Espaço entre as peças */
+}
+
+.pecasContainer .imgBey img {
+    width: 100px; /* Tamanho padrão das imagens */
+    margin-bottom: 5px; /* Espaço entre a imagem e o texto */
+    border: 1px solid #810101; /* Borda da imagem */
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5); /* Sombra */
+    transition: transform 0.3s, border-color 0.3s;
+}
+
+.pecasContainer .imgBey img:hover {
+    transform: scale(1.1); /* Aumenta ligeiramente no hover */
+    border-color: #fff; /* Muda a cor da borda no hover */
+}
+
+.pecasContainer .imgBey p {
+    font-size: 16px; /* Tamanho do texto */
+    color: #ffffff; /* Cor do texto */
+    margin: 0; /* Remove margens extras */
+    font-family: 'SF Theramin Gothic', sans-serif;
+}
+
+.pecasContainer h3 {
+    font-size: 24px; /* Tamanho do título */
+    color: #ffffff; /* Cor do texto */
+    margin-bottom: 15px; /* Espaço abaixo do título */
+    text-align: center; /* Centraliza o texto */
+    text-transform: uppercase; /* Coloca o texto em maiúsculas */
+    font-family: 'SF Theramin Gothic', sans-serif;
+}
