@@ -1,0 +1,35 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo com fundo personalizado */
+body {
+    background-image: url('imagens/fundoPretoBranco.png');
+    background-size: cover;
+    display: flex;
+}
+
+/* Navbar lateral esquerda */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 100vh;
+    background-color: rgba(255, 0, 0, 0.4);
+    padding-top: 20px;
+}
+
+.sidebar .icon {
+    width: 63px;
+    margin: 60px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.sidebar .icon:hover {
+    transform: scale(1.1);
+}

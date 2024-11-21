@@ -252,3 +252,66 @@ body {
     text-transform: uppercase; /* Coloca o texto em maiúsculas */
     font-family: 'SF Theramin Gothic', sans-serif;
 }
+
+.addPeca {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 20px;
+    margin: 20px auto; /* Centraliza horizontalmente */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    width: 80%; /* Ajusta largura */
+    max-width: 600px; /* Limita a largura máxima */
+    font-family: 'SF Theramin Gothic', sans-serif;
+    color: #ffffff;
+    position: absolute; /* Permite posicionamento personalizado */
+    top: 300%; /* Centraliza verticalmente */
+    left: 165%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta o centro */
+}
+
+.addPeca label {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.addPeca input[type="text"], 
+.addPeca input[type="number"], 
+.addPeca select {
+    width: 100%; /* Ocupa toda a largura */
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    border: 1px solid #810101;
+    border-radius: 5px;
+    background-color: rgba(58, 10, 10, 0.1);
+    font-family: inherit;
+}
+
+.addPeca input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.addPeca button {
+    align-self: center; /* Centraliza o botão */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #810101;
+    color: #ffffff;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.addPeca button:hover {
+    background-color: #ffffff;
+    color: #810101;
+    transform: scale(1.05);
+}

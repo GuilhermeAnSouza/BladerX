@@ -80,7 +80,7 @@
         <p class="iconLegenda">Adicionar</p>
       </div>
 
-      <div class="adicionar" id="adicionar">
+            <div class="addPeca" id="addPeca">
         <label for="nome">Nome:</label>
         <input type="text" id="nome" placeholder="Ex: Achilles">
         
@@ -101,7 +101,6 @@
         
         <button onclick="adicionarPeca()">Adicionar Peça</button>
       </div>
-      
 
       <div class="iconContainer">
         <img src="imagens/historico.png" alt="Histórico" class="iconSuperior" onclick="historico()">
@@ -147,7 +146,7 @@
   superiorEsquerdo.style.display = 'none'
   popup.style.display = 'none'
   listaPecas.style.display = 'none'
-  adicionar.style.display = 'none'
+  addPeca.style.display = 'none'
 
   var imagensPecas = { 
   'Achilles': 'Gatinko/GatinkoChipAchilles.webp', // JSON para colocar um link para cada nome de peça
@@ -171,13 +170,15 @@
     superiorEsquerdo.style.display = 'flex'
     popup.style.display = 'block'
     baixo.style.display = 'none'
+    cima.style.display = 'none'
 
   }
 
   function carregarPecas() {
   pecasCombo.style.display = 'none';
   listaPecas.style.display = 'block';
-  cima.style.display= 'none'
+  addPeca.style.display = 'none'
+  
 
   fetch("/pecas/listar") // Rota que retorna os dados da tabela 'pecas'
     .then(function (response) {
@@ -244,7 +245,7 @@
 function combos() {
   pecasCombo.style.display = 'none';
   listaPecas.style.display = 'block';
-  cima.style.display= 'none'
+  addPeca.style.display = 'none'
 
   fetch("/pecas/listar") // Rota que retorna os dados da tabela 'pecas'
     .then(function (response) {
@@ -315,7 +316,9 @@ function combos() {
     superiorEsquerdo.style.display = 'flex'
     baixo.style.display = 'none'
     popup.style.display = 'none'
-    adicionar.style.display = 'none'
+    addPeca.style.display = 'block'
+    
+
   }
 
   function adicionarPeca() {
@@ -365,7 +368,6 @@ function combos() {
       alert("Erro ao conectar com o servidor.");
     });
 }
-
 
   function historico() {
     alert('historico')
