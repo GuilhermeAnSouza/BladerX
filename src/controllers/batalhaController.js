@@ -1,7 +1,7 @@
 var batalhaModel = require("../models/batalhaModel"); // Para refenciar o pecasModel
 
 function listar(req, res) { // Pega a função do pecasModel para criar a função listar, para colocar os dados em um JSON
-    pecasModel.listarPecas()
+    batalhaModel.listarPecas()
         .then(function (resultados) {
             res.status(200).json(resultados); // 200 Significa que deu certo 
         })
@@ -17,13 +17,12 @@ function adicionar(req, res) {
     // nome, abraviacao, tipo, fkBeyUsuario
     var fkBey1 = req.body.fkBey1Server;
     var fkBey2 = req.body.fkBey2Server;
-    var fkCampeonato = req.body.fkCampeonatoServer;
     var fase = req.body.faseServer;
     var ganhador = req.body.ganhadorServer
     var perdedor = req.body.perdedorServer
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        pecasModel.adicionar(fkBey1, fkBey2, fkCampeonato, fase,ganhador,perdedor  )
+        batalhaModel.adicionar(fkBey1, fkBey2,fase,ganhador,perdedor  )
             .then(
                 function (resultado) {
                     res.json(resultado);

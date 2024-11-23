@@ -5,10 +5,10 @@ function listarHistorico() {
     return database.executar(instrucao);
 }
 
-function partida(fkBey1, fkBey2, fkCampeonato, fase, ganhador, perdedor) {
+function adicionar(fkBey1, fkBey2, fase, ganhador, perdedor) {
     var instrucaoSql = `
-        INSERT INTO rounds (fkBey1, fkBey2, fkCampeonato, fase, ganhador, perdedor) 
-        VALUES ('${fkBey1}', '${fkBey2}', '${fkCampeonato}', '${fase}','${ganhador}','${perdedor}');
+        INSERT INTO rounds (fkBey1, fkBey2, fase, ganhador, perdedor) 
+        VALUES ('${fkBey1}', '${fkBey2}', '${fase}','${ganhador}','${perdedor}');
     `;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
@@ -16,5 +16,5 @@ function partida(fkBey1, fkBey2, fkCampeonato, fase, ganhador, perdedor) {
 
 module.exports = {
     listarHistorico,
-    partida // Para outros arquivos poderem usar a função
+    adicionar // Para outros arquivos poderem usar a função
 };

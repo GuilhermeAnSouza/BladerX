@@ -18,6 +18,7 @@ var app = express();
 var usuarioRouter = require("./src/routes/usuarios");
 // var empresasRouter = require("./src/routes/empresas");
 var pecasRouter = require("./src/routes/pecas");
+var batalhaRouter = require("./src/routes/batalha");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,6 +29,7 @@ app.use(cors());
 app.use("/usuarios", usuarioRouter);
 // app.use("/empresas", empresasRouter);
 app.use("/pecas", pecasRouter);
+app.use("/batalha", batalhaRouter);
 
 app.listen(PORTA_APP, function () {
     console.log(`

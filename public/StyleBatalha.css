@@ -33,3 +33,19 @@ body {
 .sidebar .icon:hover {
     transform: scale(1.1);
 }
+
+.batalha {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 20px;
+    margin: 20px;
+}
+
+.combo-lado {
+    flex: 1;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}

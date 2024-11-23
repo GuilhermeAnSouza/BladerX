@@ -1,18 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Batalha Beyblade</title>
     <link rel="stylesheet" href="styleBatalha.css">
     <link href="https://fonts.cdnfonts.com/css/sf-theramin-gothic" rel="stylesheet">
 </head>
+
 <body>
     <nav class="sidebar">
         <a href="index.html"> <img src="imagens/perfil.png" alt="Perfil" class="icon"></a>
         <a href="batalha.html"> <img src="imagens/battleEscuro.png" alt="Battle" class="icon"></a>
         <a href="criacao.html"> <img src="imagens/construir.png" alt="Construir" class="icon"></a>
         <a href="campeonato.html"> <img src="imagens/torneio.png" alt="Torneio" class="icon"></a>
-      </nav>
+    </nav>
+
+    <div class="batalha">
+        <!-- Combo do lado esquerdo -->
+        <div class="combo-lado" id="lado-esquerdo">
+            <h3>Combo 1</h3>
+            <input type="text" id="inputCombo1" placeholder="Digite o ID do combo 1">
+            <button onclick="combo1()">Mostrar</button>
+            <div id="combo1"></div>
+            <!-- Botão para indicar vitória -->
+            <button onclick="vencedor(this)" 
+                data-bey1="1" 
+                data-bey2="2" 
+                data-fase="1" 
+                data-ganhador="Combo 1" 
+                data-perdedor="Combo 2">
+                Indicar Combo 1 como Vencedor
+            </button>
+        </div>
+
+        <!-- Combo do lado direito -->
+        <div class="combo-lado" id="lado-direito">
+            <h3>Combo 2</h3>
+            <input type="text" id="inputCombo2" placeholder="Digite o ID do combo 2">
+            <button onclick="combo2()">Mostrar</button>
+            <div id="combo2"></div>
+            <!-- Botão para indicar vitória -->
+            <button onclick="vencedor(this)" 
+                data-bey1="1" 
+                data-bey2="2" 
+                data-fase="1" 
+                data-ganhador="Combo 2" 
+                data-perdedor="Combo 1">
+                Indicar Combo 2 como Vencedor
+            </button>
+        </div>
+    </div>
+
+
 </body>
+
 </html>
+
+<script>
+    var imagensPecas = {
+        'Achilles': 'Gatinko/GatinkoChipAchilles.webp',
+        'Gou': 'layerWeight/LayerWeightGou.webp',
+        'Ace': 'layer/LayerBaseAce.webp',
+        'Around': 'disk/DiskAround.webp',
+        'Charge': 'driver/DriverCharge.webp',
+        'Ashura': 'gatinko/GatinkoChipAshura.webp',
+        'Metsu': 'layerWeight/LayerWeightRetsu.webp',
+        'Bushin': 'layer/LayerBaseBushin.webp',
+        'Ratchet': 'disk/DiskRatchet.webp',
+        'Keep': 'driver/DriverKeep.webp',
+        'Generate': 'driver/DriverGenerate.webp',
+        'Erase': 'layer/LayerBaseErase.webp',
+        'Hydra': 'Gatinko/GatinkoChipHydra.webp'
+    };
+
+    function exibirCombo(comboId, lado) {
+        fetch("/pecas/listar")
+            .then(function (response) {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    console.error("Erro ao buscar peças");
+                    return [];
+                }
+            })
+            .then(function (pecas) {
+                var ladoDiv = document.getElementById(lado);
+                ladoDiv.innerHTML = ""; // Limpa apenas o lado correspondente
+
+                var beys = {};
+                pecas.forEach(function (peca) {
+                    if (peca.fkBeyUsuario !== null) {
+                        if (!beys[peca.fkBeyUsuario]) {
+                            beys[peca.fkBeyUsuario] = [];
+                        }
+                        beys[peca.fkBeyUsuario].push(peca);
+                    }
+                });
+
+                if (beys[comboId]) {
+                    var comboContainer = document.createElement('div');
+                    comboContainer.classList.add('tipoPecas');
+                    comboContainer.innerHTML +=
+                        '<h3>Combo Beyblade #' + comboId + '</h3>' +
+                        '<div id="combo-' + comboId + '" class="pecasTipo"></div>';
+
+                    ladoDiv.appendChild(comboContainer);
+
+                    var pecasCombo = beys[comboId];
+                    var comboDiv = document.getElementById('combo-' + comboId);
+
+                    pecasCombo.forEach(function (peca) {
+                        var nomePeca = peca.nome;
+                        var abraviacao = peca.abraviacao;
+                        var imagemCaminho = imagensPecas[nomePeca];
+
+                        var imgPecas =
+                            '<div class="imgBey">' +
+                            '<img src="beyblades/' + imagemCaminho + '" style="width: 50px;" />' +
+                            '<p>' + nomePeca + ' (' + (abraviacao || "N/A") + ')</p>' +
+                            '</div>';
+
+                        comboDiv.innerHTML += imgPecas;
+                    });
+                } else {
+                    ladoDiv.innerHTML = `<p>Nenhum combo encontrado para o ID ${comboId}</p>`;
+                }
+            })
+            .catch(function (erro) {
+                console.error("Erro na requisição:", erro);
+            });
+    }
+
+    function combo1() {
+        var primeiro = inputCombo1.value;
+        exibirCombo(primeiro, "combo1");
+    }
+
+    function combo2() {
+        var segundo = inputCombo2.value;
+        exibirCombo(segundo, "combo2");
+    }
+
+    function vencedor(botao) {
+    var fkBey1 = botao.getAttribute("data-bey1");
+    var fkBey2 = botao.getAttribute("data-bey2");
+    var fase = botao.getAttribute("data-fase");
+    var ganhador = botao.getAttribute("data-ganhador");
+    var perdedor = botao.getAttribute("data-perdedor");
+
+    if (!fkBey1 || !fkBey2 || !fase || !ganhador || !perdedor) {
+        console.error("Dados insuficientes para registrar a batalha.");
+        return;
+    }
+
+    fetch("/batalha/adicionar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            fkBey1Server: fkBey1,
+            fkBey2Server: fkBey2,
+            faseServer: fase,
+            ganhadorServer: ganhador,
+            perdedorServer: perdedor
+        })
+    })
+    .then(response => {
+        if (response.ok) {
+            return response.json();
+        } else {
+            throw new Error("Erro ao registrar a batalha no banco de dados.");
+        }
+    })
+    .then(data => {
+        console.log("Batalha registrada com sucesso:", data);
+        alert("Batalha registrada com sucesso!");
+    })
+    .catch(error => {
+        console.error("Erro ao enviar dados:", error);
+        alert("Erro ao registrar a batalha.");
+    });
+}
+
+
+</script>
