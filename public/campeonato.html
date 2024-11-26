@@ -1,18 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="stylePerfil.css">
+    <title>Dashboard de Estatísticas</title>
+    <link rel="stylesheet" href="styleDash.css">
     <link href="https://fonts.cdnfonts.com/css/sf-theramin-gothic" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+
 <body>
     <nav class="sidebar">
         <a href="index.html"> <img src="imagens/perfil.png" alt="Perfil" class="icon"></a>
         <a href="batalha.html"> <img src="imagens/battleEscuro.png" alt="Battle" class="icon"></a>
-        <a href="criacao.html"> <img src="imagens/construir.png" alt="Construir" class="icon"></a>
         <a href="campeonato.html"> <img src="imagens/torneio.png" alt="Torneio" class="icon"></a>
-      </nav>
+    </nav>
+
+    <div>
+        <canvas id="chart"></canvas>
+    </div>
+
+    <script>
+        fetch("/batalha/listar")
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error("Erro ao buscar o histórico");
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Criando um objeto para armazenar as estatísticas
+                var stats = {};
+
+                // Iterando pelos rounds para contabilizar vitórias e derrotas
+                data.forEach(round => {
+                    var vencedor = round.fkBey1;
+                    var perdedor = round.fkBey2;
+
+                    // Inicializando o vencedor
+                    if (!stats[vencedor]) {
+                        stats[vencedor] = { vitorias: 0, derrotas: 0 };
+                    }
+                    stats[vencedor].vitorias++;
+
+                    // Inicializando o perdedor
+                    if (!stats[perdedor]) {
+                        stats[perdedor] = { vitorias: 0, derrotas: 0 };
+                    }
+                    stats[perdedor].derrotas++;
+                });
+
+                // Extraindo os dados para o gráfico
+                var ids = Object.keys(stats).sort(); // Ordenar IDs para consistência
+                var vitorias = ids.map(id => stats[id].vitorias);
+                var derrotas = ids.map(id => stats[id].derrotas);
+
+                // Configurando o gráfico
+                var ctx = document.getElementById("chart").getContext("2d");
+                new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: ids, // ID dos Beyblades
+                        datasets: [
+                            {
+                                label: "Vitórias",
+                                data: vitorias,
+                                backgroundColor: "rgba(33, 54, 117)",
+                                borderColor: "rgba(0, 0, 0)",
+                                borderWidth: 2
+                            },
+                            {
+                                label: "Derrotas",
+                                data: derrotas,
+                                backgroundColor: "rgba(200, 0, 0)",
+                                borderColor: "rgba(0, 0, 0)",
+                                borderWidth: 2
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                position: "top",
+                                labels: {
+                                    color: 'white',
+                                    font: {
+                                    size: 20 // Tamanho da fonte do título
+                                }
+
+                                }
+                            },
+                            title: {
+                                display: true,
+                                text: "Estatísticas das partidas",
+                                color: "white",
+                                font: {
+                                    size: 24 // Tamanho da fonte do título
+                                }
+                            }
+
+                        },
+                        scales: {
+                            x: {
+                                title: {
+                                    display: true,
+                                    text: "ID Beyblade",
+                                    color: 'black',
+                                    font: {
+                                    size: 20 // Tamanho da fonte do título
+                                }
+                                }
+                            },
+                            y: {
+                                beginAtZero: true,
+                                title: {
+                                    display: true,
+                                    text: "Quantidade",
+                                    color: 'black',
+                                    font: {
+                                    size: 20
+                                }
+                                }
+                            }
+                        }
+                    }
+                });
+            })
+            .catch(error => {
+                console.error("Erro:", error);
+                alert("Erro ao carregar os dados. Tente novamente mais tarde.");
+            });
+    </script>
 </body>
+
 </html>

@@ -14,5 +14,227 @@
         <a href="criacao.html"> <img src="imagens/construir.png" alt="Construir" class="icon"></a>
         <a href="campeonato.html"> <img src="imagens/torneio.png" alt="Torneio" class="icon"></a>
       </nav>
+
+      <div class="popup" id="popup">
+        <div class="pecasCombo" id="pecasCombo">
+          <span class="combos" onclick="combos()">Desmontar</span>
+          <span class="pecas" onclick="carregarPecas()">Montar</span>
+        </div>
+        <div class='listaPecas' id="listaPecas">
+          <h3>Gatinko</h3>
+          <div id="gatinko"></div>
+
+          <h3>Layer</h3>
+          <div id="layer"></div>
+
+          <h3>Layer Weight</h3>
+          <div id="layerWeight"></div>
+
+          <h3>Disk</h3>
+          <div id="disk"></div>
+
+          <h3>Driver</h3>
+          <div id="driver"></div>
+        </div>
+      </div>
+      
 </body>
 </html>
+
+<script>
+
+var imagensPecas = { 
+  'Achilles': 'Gatinko/GatinkoChipAchilles.webp', // JSON para colocar um link para cada nome de peça
+  'Gou': 'layerWeight/LayerWeightGou.webp',
+  'Ace': 'layer/LayerBaseAce.webp',
+  'Around': 'disk/DiskAround.webp',
+  'Charge': 'driver/DriverCharge.webp',
+  'Ashura': 'gatinko/GatinkoChipAshura.webp',
+  'Metsu': 'layerWeight/LayerWeightRetsu.webp',
+  'Bushin': 'layer/LayerBaseBushin.webp',
+  'Ratchet': 'disk/DiskRatchet.webp',
+  'Keep': 'driver/DriverKeep.webp',
+  'Generate': 'driver/DriverGenerate.webp',
+  'Erase': 'layer/LayerBaseErase.webp',
+  'Hydra': 'Gatinko/GatinkoChipHydra.webp'
+}
+
+var idPecaSelecionada = null;
+
+
+function carregarPecas() {
+  pecasCombo.style.display = 'none';
+  listaPecas.style.display = 'block';
+
+  fetch("/pecas/listar") // Rota que retorna os dados da tabela 'pecas'
+    .then(function (response) {
+      if (response.ok) {
+        return response.json();
+      } else {
+        console.error("Erro ao buscar peças");
+        return [];
+      }
+    })
+    .then(function (pecas) {
+      listaPecas.innerHTML = ""; // Limpa a lista antes de carregar
+
+      var pecasFiltradas = pecas.filter(function (peca) {
+        return peca.fkBeyUsuario === null;
+      });
+
+      var tipos = [];
+      for (var i = 0; i < pecasFiltradas.length; i++) {
+        if (tipos.indexOf(pecasFiltradas[i].tipo) === -1) {
+          tipos.push(pecasFiltradas[i].tipo);
+        }
+      }
+
+      for (var i = 0; i < tipos.length; i++) {
+        var tipo = tipos[i];
+        listaPecas.innerHTML +=
+          '<div class="tipoPecas">' +
+          '<h3>' + tipo + '</h3>' +
+          '<div id="tipo-' + tipo + '" class="pecasTipo"></div>' +
+          '</div>';
+      }
+
+      for (var i = 0; i < pecasFiltradas.length; i++) {
+        var peca = pecasFiltradas[i];
+        var nomePeca = peca.nome;
+        var tipoPeca = peca.tipo;
+        var imagemCaminho = imagensPecas[nomePeca];
+
+        var imgPecas =
+          '<div class="imgBey" onclick="selecionarPeca(' + peca.id + ')">' + // Evento para atualizar idPecaSelecionada
+          '<img src="beyblades/' + imagemCaminho + '" style="width: 50px;" />' +
+          '<p>' + nomePeca + '</p>' +
+          '</div>';
+
+        var tipoContainer = document.getElementById("tipo-" + tipoPeca);
+        if (tipoContainer) {
+          tipoContainer.innerHTML += imgPecas;
+        }
+      }
+    })
+    .catch(function (erro) {
+      console.error("Erro na requisição:", erro);
+    });
+}
+
+// Função chamada ao clicar em uma peça
+function selecionarPeca(id) {
+  idPecaSelecionada = id; // Atualiza a variável global com o ID da peça
+  console.log("Peça selecionada com ID:", idPecaSelecionada); // Apenas para depuração
+}
+
+function combos() {
+  pecasCombo.style.display = 'none';
+  listaPecas.style.display = 'block';
+
+  fetch("/pecas/listar")
+    .then(function (response) {
+      if (response.ok) {
+        return response.json();
+      } else {
+        console.error("Erro ao buscar peças");
+        return [];
+      }
+    })
+    .then(function (pecas) {
+      listaPecas.innerHTML = "";
+
+      var beys = {};
+      pecas.forEach(function (peca) {
+        if (peca.fkBeyUsuario !== null) {
+          if (!beys[peca.fkBeyUsuario]) {
+            beys[peca.fkBeyUsuario] = [];
+          }
+          beys[peca.fkBeyUsuario].push(peca);
+        }
+      });
+
+      for (var beyId in beys) {
+        var comboContainer = document.createElement('div');
+        comboContainer.classList.add('tipoPecas');
+
+        comboContainer.innerHTML +=
+          '<h3>Combo Beyblade #' + beyId + '</h3>' +
+          '<div id="combo-' + beyId + '" class="pecasTipo"></div>';
+
+        listaPecas.appendChild(comboContainer);
+
+        var pecasCombo = beys[beyId];
+        var comboDiv = document.getElementById('combo-' + beyId);
+
+        pecasCombo.forEach(function (peca) {
+          var nomePeca = peca.nome;
+          var imagemCaminho = imagensPecas[nomePeca];
+
+          var imgPecas =
+            '<div class="imgBey" onclick="removerCombo(' + peca.id + ')">' + // Adiciona evento onclick
+            '<img src="beyblades/' + imagemCaminho + '" style="width: 50px;" />' +
+            '<p>' + nomePeca + '</p>' +
+            '</div>';
+
+          comboDiv.innerHTML += imgPecas;
+        });
+      }
+    })
+    .catch(function (erro) {
+      console.error("Erro na requisição:", erro);
+    });
+}
+
+// Função para atribuir combo a uma peça
+function atribuirCombo(idPecaSelecionada) {
+    var comboId = prompt("Digite o ID do combo para esta peça:");
+    if (!comboId) { // Cancela se comboId for null ou vazio
+        alert("ID do combo inválido.");
+        return;
+    }
+    fetch('/pecas/montar', {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ idPecas: idPecaSelecionada, fkBeyUsuario: comboId })
+    })
+    .then(function (response) {
+        if (response.ok) {
+            alert("Peça atribuída ao combo com sucesso!");
+            carregarPecas();
+        } else {
+            alert("Erro ao atribuir peça ao combo.");
+        }
+    })
+    .catch(function (erro) {
+        console.error("Erro ao atribuir peça:", erro);
+    });
+}
+
+
+// Função para remover uma peça de um combo
+function removerCombo(pecaId) {
+    if (!pecaId) {
+        alert("Peça inválida.");
+        return;
+    }
+    if (confirm("Deseja remover esta peça do combo?")) {
+        fetch(`/pecas/removerCombo/${pecaId}`, {
+            method: "PUT"
+        })
+        .then(function (response) {
+            if (response.ok) {
+                alert("Peça removida do combo com sucesso!");
+                combos();
+            } else {
+                alert("Erro ao remover peça do combo.");
+            }
+        })
+        .catch(function (erro) {
+            console.error("Erro ao remover peça:", erro);
+        });
+    }
+}
+
+
+
+</script>

@@ -37,8 +37,44 @@ function adicionar(req, res) {
             );
     }
 
+    function montar(req, res) {
+        var { idPeca, fkBeyUsuario } = req.body;
+    
+        pecasModel.montar(idPeca, fkBeyUsuario)
+            .then(() => {
+                res.status(200).send("Peça atribuída ao combo com sucesso!");
+            })
+            .catch((erro) => {
+                console.error("Erro ao montar peça:", erro);
+                res.status(500).json({ erro: "Erro ao montar peça" });
+            });
+    }
+
+        function desmontar(req, res) {
+            var idPecas = req.body.idPecasServer; // Recupera o ID da peça
+        
+            pecasModel.desmontar(idPecas)
+                .then(
+                    function (resultado) {
+                        res.json(resultado);
+                    }
+                ).catch(
+                    function (erro) {
+                        console.log(erro);
+                        console.log(
+                            "\nHouve um erro ao realizar o cadastro! Erro: ",
+                            erro.sqlMessage
+                        );
+                        res.status(500).json(erro.sqlMessage);
+                    }
+                );
+        }
+        
+
 
 module.exports = { // criando funcao listar baseado na funcao listarPecas para outras páginas usarem
     listar,
-    adicionar
+    adicionar,
+    montar,
+    desmontar
 };

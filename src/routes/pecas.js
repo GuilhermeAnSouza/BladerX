@@ -8,4 +8,9 @@ router.get("/listar", pecasController.listar); // O caminho da função do contr
 router.post("/adicionar", function (req, res) {
     pecasController.adicionar(req, res);
 });
+
+router.put("/montar", pecasController.montar);
+router.put("/desmontar", pecasController.desmontar);
+
+
 module.exports = router;

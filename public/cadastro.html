@@ -84,25 +84,25 @@
   senhaVar == ""
 ) {
   cardErro.style.display = "block";
-  mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+  mensagem_erro.innerHTML = "Todos os campos em branco";
   finalizarAguardar();
   return false;
 
 } else if (nomeVar.length <= 1) {
   cardErro.style.display = "block";
-  mensagem_erro.innerHTML = "(Mensagem de erro para nome igual ou menor que 1)";
+  mensagem_erro.innerHTML = "Nome igual ou menor que 1";
   finalizarAguardar();
   return false;
 
 } else if (senhaVar.length < 6) {
   cardErro.style.display = "block";
-  mensagem_erro.innerHTML = "(Mensagem de erro para senha menor que 6)";
+  mensagem_erro.innerHTML = "Senha menor que 6";
   finalizarAguardar();
   return false;
 
 } else if (emailVar.indexOf('@') === -1) {  // Corrigido para detectar emails sem '@'
   cardErro.style.display = "block";
-  mensagem_erro.innerHTML = "(Mensagem de erro para email sem @)";
+  mensagem_erro.innerHTML = "Email sem @";
   finalizarAguardar();
   return false;
 

@@ -14,7 +14,26 @@ function adicionar(nome, abraviacao, tipo, fkBeyUsuario) {
     return database.executar(instrucaoSql);
 }
 
+function montar(idPecas, fkBeyUsuario) {
+    var instrucaoAtualizar = `
+        UPDATE pecas 
+        SET fkBeyUsuario = ${fkBeyUsuario} 
+        WHERE idPecas = ${idPecas};
+    `;
+    console.log("Executando SQL: " + instrucaoAtualizar);
+    return database.executar(instrucaoAtualizar);
+}
+
+function desmontar(idPecas){
+    var instrucaoAtualizar = `
+        UPDATE pecas SET fkBeyUsuario = null
+            WHERE idPecas = ${idPecas} `    
+    return database.executar(instrucaoAtualizar)
+}
+
 module.exports = {
     listarPecas,
-    adicionar // Para outros arquivos poderem usar a função
+    adicionar, // Para outros arquivos poderem usar a função
+    montar,
+    desmontar
 };

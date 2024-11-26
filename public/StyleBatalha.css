@@ -7,7 +7,7 @@
 
 /* Corpo com fundo personalizado */
 body {
-    background-image: url('imagens/fundoPretoBranco.png');
+    background-image: url('imagens/fundoBatalha.png');
     background-size: cover;
     display: flex;
 }
@@ -19,13 +19,13 @@ body {
     align-items: center;
     width: 100px;
     height: 100vh;
-    background-color: rgba(255, 0, 0, 0.4);
+    background-color: rgba(255, 255, 255, 0.4);
     padding-top: 20px;
 }
 
 .sidebar .icon {
     width: 63px;
-    margin: 60px;
+    margin: 90px;
     cursor: pointer;
     transition: transform 0.2s;
 }
@@ -34,18 +34,61 @@ body {
     transform: scale(1.1);
 }
 
+/* Alinha os elementos centralizados com espaçamento interno */
 .batalha {
     display: flex;
-    justify-content: space-between;
+    justify-content: center; /* Centraliza os itens horizontalmente */
     align-items: flex-start;
-    gap: 20px;
-    margin: 20px;
+    gap: 400px;
+    padding: 0 300px; /* Espaço nas laterais */
+    margin: 20px 0; /* Apenas espaço vertical */
 }
 
+/* Remove as margens de combo-lado */
 .combo-lado {
     flex: 1;
-    padding: 10px;
-    background-color: #f4f4f4;
-    border: 1px solid #ccc;
+    padding: 15px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    font-family: 'SF Theramin Gothic', sans-serif;
+    color: #ffffff;
+}
+
+.combo-lado button {
+    align-self: center; /* Centraliza o botão */
+    padding: 10px 20px;
+    border: none;
     border-radius: 5px;
+    background-color: #000000;
+    color: #ffffff;
+    font-family: 'SF Theramin Gothic', sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    transition: transform 0.2s, background-color 0.3s;
+}
+
+.combo-lado button:hover {
+    background-color: #ffffff;
+    color: #000000;
+    transform: scale(1.05);
+}
+
+/* Centraliza a imagem no meio da tela */
+.icon-centro {
+    position: absolute; /* Permite posicionar em relação ao viewport */
+    top: 50%; /* Centraliza verticalmente */
+    left: 50%; /* Centraliza horizontalmente */
+    transform: translate(-50%, -50%); /* Ajusta para o verdadeiro centro */
+    width: 200px; /* Defina um tamanho adequado */
+    height: auto;
+    opacity: 0.8; /* Torna a imagem levemente transparente */
+    z-index: -1; /* Coloca a imagem no fundo, atrás de outros elementos */
+}
+
+/* Ajuste a barra lateral para garantir que ela não sobreponha a imagem central */
+.sidebar {
+    z-index: 1; /* Garante que a barra fique na frente da imagem central */
 }

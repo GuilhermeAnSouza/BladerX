@@ -13,9 +13,11 @@
     <nav class="sidebar">
         <a href="index.html"> <img src="imagens/perfil.png" alt="Perfil" class="icon"></a>
         <a href="batalha.html"> <img src="imagens/battleEscuro.png" alt="Battle" class="icon"></a>
-        <a href="criacao.html"> <img src="imagens/construir.png" alt="Construir" class="icon"></a>
         <a href="campeonato.html"> <img src="imagens/torneio.png" alt="Torneio" class="icon"></a>
     </nav>
+
+
+    <img src="imagens/battleBranco.png" alt="Battle" class="icon-centro">
 
     <div class="batalha">
         <!-- Combo do lado esquerdo -->
@@ -25,14 +27,9 @@
             <button onclick="combo1()">Mostrar</button>
             <div id="combo1"></div>
             <!-- Botão para indicar vitória -->
-            <button onclick="vencedor(this)" 
-                data-bey1="1" 
-                data-bey2="2" 
-                data-fase="1" 
-                data-ganhador="Combo 1" 
-                data-perdedor="Combo 2">
-                Indicar Combo 1 como Vencedor
-            </button>
+            <button onclick="vencedor(this, 'inputCombo1', 'inputCombo2')">Indicar Combo como Vencedor</button>
+              
+        
         </div>
 
         <!-- Combo do lado direito -->
@@ -42,14 +39,8 @@
             <button onclick="combo2()">Mostrar</button>
             <div id="combo2"></div>
             <!-- Botão para indicar vitória -->
-            <button onclick="vencedor(this)" 
-                data-bey1="1" 
-                data-bey2="2" 
-                data-fase="1" 
-                data-ganhador="Combo 2" 
-                data-perdedor="Combo 1">
-                Indicar Combo 2 como Vencedor
-            </button>
+            <button onclick="vencedor(this, 'inputCombo2', 'inputCombo1')">Indicar Combo como Vencedor</button>
+                
         </div>
     </div>
 
@@ -143,17 +134,21 @@
         exibirCombo(segundo, "combo2");
     }
 
-    function vencedor(botao) {
-    var fkBey1 = botao.getAttribute("data-bey1");
-    var fkBey2 = botao.getAttribute("data-bey2");
-    var fase = botao.getAttribute("data-fase");
-    var ganhador = botao.getAttribute("data-ganhador");
-    var perdedor = botao.getAttribute("data-perdedor");
+    function vencedor(botao, idVencedorInput, idPerdedorInput) {
+    var vencedorId = document.getElementById(idVencedorInput).value.trim();
+    var perdedorId = document.getElementById(idPerdedorInput).value.trim();
 
-    if (!fkBey1 || !fkBey2 || !fase || !ganhador || !perdedor) {
-        console.error("Dados insuficientes para registrar a batalha.");
+    if (!vencedorId || !perdedorId) {
+        alert("Por favor, preencha os dois IDs antes de continuar.");
         return;
     }
+
+    if (vencedorId === perdedorId) {
+        alert("Os dois combos não podem ter o mesmo ID. Verifique os valores.");
+        return;
+    }
+
+    var fase = "fase_exemplo"; // Altere isso conforme necessário.
 
     fetch("/batalha/adicionar", {
         method: "POST",
@@ -161,11 +156,10 @@
             "Content-Type": "application/json"
         },
         body: JSON.stringify({
-            fkBey1Server: fkBey1,
-            fkBey2Server: fkBey2,
-            faseServer: fase,
-            ganhadorServer: ganhador,
-            perdedorServer: perdedor
+            fkBey1Server: vencedorId,
+            fkBey2Server: perdedorId,
+            ganhadorServer: vencedorId,
+            perdedorServer: perdedorId
         })
     })
     .then(response => {
@@ -177,13 +171,15 @@
     })
     .then(data => {
         console.log("Batalha registrada com sucesso:", data);
-        alert("Batalha registrada com sucesso!");
+        alert(`Combo ${vencedorId} foi registrado como vencedor contra o combo ${perdedorId}!`);
     })
     .catch(error => {
         console.error("Erro ao enviar dados:", error);
         alert("Erro ao registrar a batalha.");
     });
 }
+
+
 
 
 </script>

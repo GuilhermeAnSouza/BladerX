@@ -33,27 +33,34 @@ create table pecas (
 
 select * from pecas;
 
-create table campeonato (
-idCampeonato int primary key auto_increment,
-fases int
-);
-
-select * from campeonato;
 
 create table rounds (
+idRound int primary key auto_increment,
 fkBey1 int,
 	foreign key (fkBey1) references beyUsuario(idBey),
 fkBey2 int,
 	foreign key (fkBey2) references beyUsuario(idBey),
-fkCampeonato int,
-	foreign key (fkCampeonato) references campeonato(idCampeonato),
 fase int,
 ganhador varchar(45),
-	primary key (fkBey1, fkBey2, fkCampeonato),
-perdedor varchar(45)
+perdedor varchar(45),
+dtRound DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
-insert into beyUsuario (fkUsuario) values (2), (2);
+ALTER TABLE rounds 
+ADD COLUMN dtRound DATETIME DEFAULT CURRENT_TIMESTAMP;
+
+alter table rounds add column dtRound datetime; 
+
+select * from rounds;
+
+insert into beyUsuario (fkUsuario) values (2);
+
+insert into pecas (nome, abraviacao ,tipo, qtd, fkBeyUsuario) values 
+('Achilles','∀','GatinkoChip',1,4 ),
+('Gou','轟','LayerWeights',1,4 ),
+('Ace','A','LayerBase',1,4 ),
+('Around','Ar','Disk',1,4 ),
+('Charge','Ch','Driver',1,4 );
 
 insert into pecas (nome, abraviacao ,tipo, qtd, fkBeyUsuario) values 
 ('Achilles','∀','GatinkoChip',1,1 ),

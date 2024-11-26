@@ -1,0 +1,46 @@
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Corpo com fundo personalizado */
+body {
+    background-image: url('imagens/fundoDash.png');
+    background-size: cover;
+    display: flex;
+}
+
+/* Navbar lateral esquerda */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100px;
+    height: 100vh;
+    background-color: rgb(49, 80, 175);
+    padding-top: 20px;
+}
+
+.sidebar .icon {
+    width: 63px;
+    margin: 90px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.sidebar .icon:hover {
+    transform: scale(1.1);
+}
+
+canvas {
+    max-width: 100%;
+    height: auto; /* Faz o gráfico se ajustar proporcionalmente */
+}
+
+div {
+    width: 80%; /* Ajusta a largura da dashboard */
+    margin: 0 auto; /* Centraliza o gráfico na página */
+    text-align: center; /* Centraliza o texto e o gráfico */
+}

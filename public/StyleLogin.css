@@ -126,3 +126,26 @@ transition-timing-function: ease-in-out;
 background-color: #000000;
 color: #ffffff;
 }
+
+.alerta_erro{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.card_erro {
+  display: none;
+  background-color: black;
+  color: white;
+  width: 230px;
+  font-family: 'SF Theramin Gothic', sans-serif;
+  position: fixed;
+  border-radius: 4px;
+  border: #ffffff 3px solid;
+  padding: 10px;
+  margin-right: 10%;
+}
+
+.card_erro #mensagem_erro{
+  font-weight: 500;
+  font-size: 20px;
+}
