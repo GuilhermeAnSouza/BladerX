@@ -50,21 +50,44 @@
 </html>
 
 <script>
-    var imagensPecas = {
-        'Achilles': 'Gatinko/GatinkoChipAchilles.webp',
-        'Gou': 'layerWeight/LayerWeightGou.webp',
-        'Ace': 'layer/LayerBaseAce.webp',
-        'Around': 'disk/DiskAround.webp',
-        'Charge': 'driver/DriverCharge.webp',
-        'Ashura': 'gatinko/GatinkoChipAshura.webp',
-        'Metsu': 'layerWeight/LayerWeightRetsu.webp',
-        'Bushin': 'layer/LayerBaseBushin.webp',
-        'Ratchet': 'disk/DiskRatchet.webp',
-        'Keep': 'driver/DriverKeep.webp',
-        'Generate': 'driver/DriverGenerate.webp',
-        'Erase': 'layer/LayerBaseErase.webp',
-        'Hydra': 'Gatinko/GatinkoChipHydra.webp'
-    };
+      var imagensPecas = {
+    'Achilles': 'Gatinko/GatinkoChipAchilles.webp', // JSON para colocar um link para cada nome de peça
+    'Gou': 'layerWeight/LayerWeightGou.webp',
+    'Ace': 'layer/LayerBaseAce.webp',
+    'Around': 'disk/DiskAround.webp',
+    'Charge': 'driver/DriverCharge.webp',
+    'Ashura': 'gatinko/GatinkoChipAshura.webp',
+    'Metsu': 'layerWeight/LayerWeightRetsu.webp',
+    'Bushin': 'layer/LayerBaseBushin.webp',
+    'Ratchet': 'disk/DiskRatchet.webp',
+    'Keep': 'driver/DriverKeep.webp',
+    'Generate': 'driver/DriverGenerate.webp',
+    'Erase': 'layer/LayerBaseErase.webp',
+    'Hydra': 'Gatinko/GatinkoChipHydra.webp',
+    'Diabolos': 'Gatinko/GatinkoChipDiabolos.webp',
+    'Bahamut':'Gatinko/GatinkoChipDiabolos.webp',    
+    'Diabolos2':'Gatinko/GatinkoChipDiabolos2.webp',
+    'Dragon':'Gatinko/GatinkoChipDragon.webp',
+    'Fafnir':'Gatinko/GatinkoChipFafnir.webp',
+    'Joker':'Gatinko/GatinkoChipJoker.webp',
+    'Longinus':'Gatinko/GatinkoChipLonginus.webp',
+    'Odin':'Gatinko/GatinkoChipOdin.webp',
+    'Pegasus':'Gatinko/GatinkoChipPegasus.webp',
+    'Spriggan':'Gatinko/GatinkoChipSpriggan.webp',
+    'Valkyrie':'Gatinko/GatinkoChip.webp',
+    'Vanguard': 'disk/DiskVanguard.webp',
+    '10': 'disk/Disk10.webp',
+    '00': 'disk/Disk00.webp',
+    'Bullet': 'driver/DriverBullet.webp',
+    'Low': 'driver/DriverLow.webp',
+    'Trick': 'driver/DriverTrick.webp',
+    'Master': 'layer/LayerBaseMaster.webp',
+    'Heaven': 'layer/LayerBaseHeaven.webp',
+    'Venom': 'layer/LayerBaseVenom.webp',
+    'judgement': 'layer/LayerBaseJudgement.webp',
+    'Sen': 'layerWeight/LayerWeightSen.webp',
+    'Zan': 'layerWeight/LayerWeightZan.webp'
+  }
 
     function exibirCombo(comboId, lado) {
         fetch(`/pecas/listar/${sessionStorage.ID_USUARIO}`)
