@@ -26,10 +26,12 @@ create table pecas (
     nome varchar(45),
     abraviacao varchar(45),
     tipo varchar(45),
-    qtd int,
+    fkUsuario int,
+		foreign key (fkUsuario) references usuario(id), 
     fkBeyUsuario int,
 		foreign key (fkBeyUsuario) references beyUsuario(idBey)
 );
+
 
 select * from pecas;
 
@@ -53,28 +55,30 @@ alter table rounds add column dtRound datetime;
 
 select * from rounds;
 
+select * from beyUsuario;
+
 insert into beyUsuario (fkUsuario) values (2);
 
-insert into pecas (nome, abraviacao ,tipo, qtd, fkBeyUsuario) values 
-('Achilles','∀','GatinkoChip',1,4 ),
-('Gou','轟','LayerWeights',1,4 ),
-('Ace','A','LayerBase',1,4 ),
-('Around','Ar','Disk',1,4 ),
-('Charge','Ch','Driver',1,4 );
+insert into pecas (nome, abraviacao ,tipo, fkUsuario, fkBeyUsuario) values 
+('Achilles','∀','GatinkoChip',2,4 ),
+('Gou','轟','LayerWeights',2,4 ),
+('Ace','A','LayerBase',2,4 ),
+('Around','Ar','Disk',2,4 ),
+('Charge','Ch','Driver',2,4 );
 
-insert into pecas (nome, abraviacao ,tipo, qtd, fkBeyUsuario) values 
-('Achilles','∀','GatinkoChip',1,1 ),
-('Gou','轟','LayerWeights',1,1 ),
-('Ace','A','LayerBase',1,1 ),
-('Around','Ar','Disk',1,1 ),
-('Charge','Ch','Driver',1,1 ),
-('Ashura','A','GatinkoChip',1,2 ),
-('Metsu','滅','LayerWeights',1,2 ),
-('Bushin','B','LayerBase',1,2 ),
-('Ratchet','Rt','Disk',1,2 ),
-('Keep','Kp','Driver',1,2 ),
-('Generate','Gn','Driver',1,null),
-('Erase','E','LayerBase',1,null);
+insert into pecas (nome, abraviacao ,tipo, fkUsuario, fkBeyUsuario) values 
+('Achilles','∀','GatinkoChip',2,1 ),
+('Gou','轟','LayerWeights',2,1 ),
+('Ace','A','LayerBase',2,1 ),
+('Around','Ar','Disk',2,1 ),
+('Charge','Ch','Driver',2,1 ),
+('Ashura','A','GatinkoChip',2,2 ),
+('Metsu','滅','LayerWeights',2,2 ),
+('Bushin','B','LayerBase',2,2 ),
+('Ratchet','Rt','Disk',2,2 ),
+('Keep','Kp','Driver',2,2 ),
+('Generate','Gn','Driver',2,null),
+('Erase','E','LayerBase',2,null);
 
 select * from pecas join BeyUsuario
 	where fkUsuario = 2;

@@ -119,6 +119,7 @@
   listaPecas.style.display = 'none'
   addPeca.style.display = 'none'
   historico_div.style.display = 'none'
+  
 
   var imagensPecas = {
     'Achilles': 'Gatinko/GatinkoChipAchilles.webp', // JSON para colocar um link para cada nome de peça
@@ -133,7 +134,8 @@
     'Keep': 'driver/DriverKeep.webp',
     'Generate': 'driver/DriverGenerate.webp',
     'Erase': 'layer/LayerBaseErase.webp',
-    'Hydra': 'Gatinko/GatinkoChipHydra.webp'
+    'Hydra': 'Gatinko/GatinkoChipHydra.webp',
+    'Diabolos': 'Gatinko/GatinkoChipDiabolos.webp'
   }
 
 
@@ -154,7 +156,7 @@
     historico_div.style.display = 'none'
     cima.style.display = 'none'
 
-    fetch("/pecas/listar") // Rota que retorna os dados da tabela 'pecas'
+    fetch(`/pecas/listar/${sessionStorage.ID_USUARIO}`) // Rota que retorna os dados da tabela 'pecas'
       .then(function (response) {
         if (response.ok) {
           return response.json();
@@ -222,8 +224,9 @@
   addPeca.style.display = 'none';
   historico_div.style.display = 'none'
   cima.style.display = 'none'
+  
 
-  fetch("/pecas/listar") // Rota que retorna os dados da tabela 'pecas'
+  fetch(`/pecas/listar/${sessionStorage.ID_USUARIO}`) // Rota que retorna os dados da tabela 'pecas'
     .then(function (response) {
       if (response.ok) {
         return response.json();
@@ -300,52 +303,61 @@
   }
 
   function adicionarPeca() {
-    // Capturar os valores dos inputs
-    var nome = document.getElementById("nome").value;
-    var abraviacao = document.getElementById("abraviacao").value;
-    var tipo = document.getElementById("tipo").value;
-    var fkBeyUsuario = document.getElementById("fkBeyUsuario").value;
+  // Capturar os valores dos inputs
+  var nome = document.getElementById("nome").value;
+  var abraviacao = document.getElementById("abraviacao").value;
+  var tipo = document.getElementById("tipo").value;
+  var fkBeyUsuario = document.getElementById("fkBeyUsuario").value;
+  var fkUsuario = sessionStorage.ID_USUARIO;
 
-    // Validação básica
-    if (!nome || !abraviacao || !tipo) {
-      alert("Por favor, preencha todos os campos obrigatórios!");
-      return;
-    }
-
-    // Criar o payload
-    var payload = {
-      nomeServer: nome,
-      abraviacaoServer: abraviacao,
-      tipoServer: tipo,
-      fkBeyUsuarioServer: fkBeyUsuario || null // Enviar NULL se o campo estiver vazio
-    };
-
-    // Enviar o fetch para o backend
-    fetch("/pecas/adicionar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(payload)
-    })
-      .then(function (response) {
-        if (response.ok) {
-          alert("Peça adicionada com sucesso!");
-          // Opcional: Limpar os campos após o sucesso
-          document.getElementById("nome").value = "";
-          document.getElementById("abraviacao").value = "";
-          document.getElementById("tipo").value = "";
-          document.getElementById("fkBeyUsuario").value = "";
-        } else {
-          console.error("Erro ao adicionar peça");
-          alert("Ocorreu um erro ao adicionar a peça.");
-        }
-      })
-      .catch(function (erro) {
-        console.error("Erro no fetch:", erro);
-        alert("Erro ao conectar com o servidor.");
-      });
+  // Verificar se o usuário está autenticado
+  if (!fkUsuario) {
+    alert("Usuário não autenticado. Faça login novamente.");
+    return;
   }
+
+  // Validação básica
+  if (!nome || !abraviacao || !tipo) {
+    alert("Por favor, preencha todos os campos obrigatórios!");
+    return;
+  }
+
+  // Criar o payload
+  var payload = {
+    nomeServer: nome,
+    abraviacaoServer: abraviacao,
+    tipoServer: tipo,
+    id: fkUsuario,
+    fkBeyUsuarioServer: fkBeyUsuario || null // Enviar NULL se o campo estiver vazio
+  };
+
+  // Enviar o fetch para o backend
+  fetch(`/pecas/adicionar/${fkUsuario}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  })
+    .then(function (response) {
+      if (response.ok) {
+        alert("Peça adicionada com sucesso!");
+        // Limpar os campos após o sucesso
+        document.getElementById("nome").value = "";
+        document.getElementById("abraviacao").value = "";
+        document.getElementById("tipo").value = "";
+        document.getElementById("fkBeyUsuario").value = "";
+      } else {
+        console.error("Erro ao adicionar peça");
+        alert("Ocorreu um erro ao adicionar a peça.");
+      }
+    })
+    .catch(function (erro) {
+      console.error("Erro no fetch:", erro);
+      alert("Erro ao conectar com o servidor.");
+    });
+}
+
 
   function historico() {
     superiorEsquerdo.style.display = 'flex'
@@ -355,7 +367,7 @@
     popup.style.display = 'none'
     cima.style.display = 'none'
 
-    fetch("/batalha/listar")
+    fetch(`/batalha/listar/${sessionStorage.ID_USUARIO}`)
       .then(response => {
         if (!response.ok) {
           throw new Error("Erro ao buscar o histórico");

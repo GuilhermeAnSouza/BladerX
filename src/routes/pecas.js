@@ -3,9 +3,9 @@ var router = express.Router();
 var pecasController = require("../controllers/pecasController");
 
 // Rota para listar peças
-router.get("/listar", pecasController.listar); // O caminho da função do controller que faz referencia ao model
+router.get("/listar/:id", pecasController.listar); // O caminho da função do controller que faz referencia ao model
 
-router.post("/adicionar", function (req, res) {
+router.post("/adicionar/:id", function (req, res) {
     pecasController.adicionar(req, res);
 });
 

@@ -67,7 +67,7 @@
     };
 
     function exibirCombo(comboId, lado) {
-        fetch("/pecas/listar")
+        fetch(`/pecas/listar/${sessionStorage.ID_USUARIO}`)
             .then(function (response) {
                 if (response.ok) {
                     return response.json();

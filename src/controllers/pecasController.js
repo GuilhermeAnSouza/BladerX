@@ -1,7 +1,8 @@
 var pecasModel = require("../models/pecasModel"); // Para refenciar o pecasModel
 
 function listar(req, res) { // Pega a função do pecasModel para criar a função listar, para colocar os dados em um JSON
-    pecasModel.listarPecas()
+    var idUsuario = req.params.id
+    pecasModel.listarPecas(idUsuario)
         .then(function (resultados) {
             res.status(200).json(resultados); // 200 Significa que deu certo 
         })
@@ -17,10 +18,11 @@ function adicionar(req, res) {
     var nome = req.body.nomeServer;
     var abraviacao = req.body.abraviacaoServer;
     var tipo = req.body.tipoServer;
+    var idUsuario = req.params.id
     var fkBeyUsuario = req.body.fkBeyUsuarioServer;
 
         // Passe os valores como parâmetro e vá para o arquivo usuarioModel.js
-        pecasModel.adicionar(nome, abraviacao, tipo, fkBeyUsuario)
+        pecasModel.adicionar(nome, abraviacao, tipo,idUsuario ,fkBeyUsuario)
             .then(
                 function (resultado) {
                     res.json(resultado);

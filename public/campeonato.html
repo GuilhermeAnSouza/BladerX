@@ -22,7 +22,7 @@
     </div>
 
     <script>
-        fetch("/batalha/listar")
+        fetch(`/batalha/listar/${sessionStorage.ID_USUARIO}`)
             .then(response => {
                 if (!response.ok) {
                     throw new Error("Erro ao buscar o histórico");

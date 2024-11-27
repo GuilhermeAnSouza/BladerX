@@ -1,15 +1,16 @@
 var database = require("../database/config"); // Pega as configurações do banco de dados
 
-function listarPecas() {
-    var instrucao = "SELECT * FROM pecas"; // Consulta SQL para listar as peças
+
+function listarPecas(fkUsuario) {
+    var instrucao = `SELECT * FROM pecas
+                        where fkUsuario = ${fkUsuario}`; // Consulta SQL para listar as peças
     return database.executar(instrucao);
 }
 
-function adicionar(nome, abraviacao, tipo, fkBeyUsuario) {
+function adicionar(nome, abraviacao, tipo, fkUsuario ,fkBeyUsuario) {
     var instrucaoSql = `
-        INSERT INTO pecas (nome, abraviacao, tipo, fkBeyUsuario) 
-        VALUES ('${nome}', '${abraviacao}', '${tipo}', ${fkBeyUsuario === null ? "NULL" : `'${fkBeyUsuario}'`});
-    `;
+        INSERT INTO pecas (nome, abraviacao, tipo, fkUsuario ,fkBeyUsuario) 
+        VALUES ('${nome}', '${abraviacao}', '${tipo}',${fkUsuario} ,${fkBeyUsuario})`;
     console.log("Executando a instrução SQL: \n" + instrucaoSql);
     return database.executar(instrucaoSql);
 }
